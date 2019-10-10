@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: stocks
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stocks
+  namespace: stocks
+  labels:
+    app: stocks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stocks
+  template:
+    metadata:
+      labels:
+        app: stocks
+    spec:
+      containers:
+        - image: firefoxx04/stocks:latest
+          name: stocks
+          env:
+          - name: BASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: stocks
+                key: base_url
+          - name: API_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: stocks
+                key: api_key_id
+          - name: API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: stocks
+                key: api_secret
