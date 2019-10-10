@@ -24,6 +24,7 @@ spec:
       containers:
         - image: firefoxx04/stocks:latest
           name: stocks
+          imagePullPolicy: Always
           env:
           - name: BASE_URL
             valueFrom:
